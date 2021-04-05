@@ -4,38 +4,32 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\News;
+use Illuminate\Support\Facades\View;
+
 class NewsController extends Controller
 {
-    private $news = [
-        1 => [
-            'title' => 'news 1'
-        ],
-        2 => [
-            'title' => 'news 2'
-        ]
+    private $categories = [
+        1 => 'Здоровье',
+        2 => 'ИТ',
+        3 => 'Спорт'
     ];
-
 
     public function index()
     {
-        foreach ($this->news as $id => $item) {
-            $url = route('news::card', ['id' => $id]);
-            echo "<div>
-                    <a href='$url'>
-                        {$item['title']}
-                   </a>
-                  </div>";
-        }
-        echo "this is main page";
-        exit;
+        return view('news.index', ['categories' => $this->categories]);
+    }
+
+    public function list($categoryId)
+    {
+        $news = (new News())->getByCategoryId($categoryId);
+        return view('news.list', ['news' => $news]);
     }
 
     public function card($id)
     {
         $news = $this->news[$id];
-
         echo $news['title'];
-
         exit;
     }
 

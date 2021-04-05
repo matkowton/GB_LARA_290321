@@ -12,12 +12,27 @@ Route::get('/', function () {
 /**
  * Новости
  */
-Route::get('/news', [NewsController::class, 'index'])
-    ->name("news::catalog");
-//Route::get('/news', '\App\Http\Controllers\NewsController@index');
-Route::get('/news/{id}', [NewsController::class, 'card'])
-    ->where('id', '[0-9]+')
-    ->name('news::card');
+Route::group([
+    'prefix' => 'news',
+    'as' => 'news::'
+], function() {
+
+    Route::get('/', [NewsController::class, 'index'])
+        ->name("categories");
+
+    Route::get('/card/{id}', [NewsController::class, 'card'])
+        ->where('id', '[0-9]+')
+        ->name('card');
+
+    Route::get('/{categoryId}', [NewsController::class, 'list'])
+        ->where('id', '[0-9]+')
+        ->name('list');
+});
+
+
+
+
+
 
 /** Админка новостей */
 Route::group([
