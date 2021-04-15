@@ -13,12 +13,14 @@ class NewsController extends Controller
         exit;
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        return response(view('admin.news.create'));
+    }
 
-        dd(route('admin::news::create'));
-        echo "create";
-        exit;
+    public function save()
+    {
+        return redirect()->route('admin::news::create');
     }
 
     public function update()
@@ -27,11 +29,6 @@ class NewsController extends Controller
     }
 
     public function delete()
-    {
-
-    }
-
-    public function show()
     {
 
     }

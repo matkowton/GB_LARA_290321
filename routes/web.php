@@ -41,8 +41,11 @@ Route::group([
 ], function () {
     Route::get('/', [AdminNewsController::class, 'index'] )
         ->name('index');
-    Route::get('/create',[AdminNewsController::class, 'create'])
+    Route::get( '/create',[AdminNewsController::class, 'create'])
         ->name('create');
+    Route::post( '/save',[AdminNewsController::class, 'save'])
+        ->name('save');
+
     Route::get('/update',[AdminNewsController::class, 'update'])
         ->name('update');
     Route::get('/delete',[AdminNewsController::class, 'delete'])
