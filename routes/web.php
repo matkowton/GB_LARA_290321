@@ -20,8 +20,8 @@ Route::group([
     Route::get('/', [NewsController::class, 'index'])
         ->name("categories");
 
-    Route::get('/card/{id}', [NewsController::class, 'card'])
-        ->where('id', '[0-9]+')
+    Route::get('/card/{news}', [NewsController::class, 'card'])
+        ->where('news', '[0-9]+')
         ->name('card');
 
     Route::get('/{categoryId}', [NewsController::class, 'list'])
@@ -30,8 +30,6 @@ Route::group([
 });
 
 Route::get('/db', [\App\Http\Controllers\DbController::class, 'index']);
-
-
 
 
 /** Админка новостей */

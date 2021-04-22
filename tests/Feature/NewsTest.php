@@ -17,7 +17,6 @@ class NewsTest extends TestCase
     {
         $response = $this->get('/news/1');
         $response->assertStatus(200)
-            ->assertSeeText('news 1')
-            ->assertSeeText('Hello!!');
+            ->assertSeeText('news 1');
     }
 }

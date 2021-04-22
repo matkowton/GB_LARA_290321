@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Test;
 use Illuminate\Http\Request;
 use \DB;
 
@@ -24,7 +25,6 @@ class DbController extends Controller
         /*$sql = "SELECT * FROM test WHERE id = :id";
         $result = DB::select($sql, [':id' => 2]);
         dd($result);*/
-
 
         $result = DB::table('test')
             ->where('id',3)
