@@ -43,8 +43,8 @@ Route::group([
         ->name('create');
     Route::post( '/save',[AdminNewsController::class, 'save'])
         ->name('save');
-    Route::get('/update/{news}', [AdminNewsController::class, 'update'])
-        ->where('news', '[0-9]+')
+    Route::get('/update/{id}', [AdminNewsController::class, 'update'])
+        ->where('id', '[0-9]+')
         ->name('update');
     Route::get('/delete/{id}',[AdminNewsController::class, 'delete'])
         ->where('id', '[0-9]+')

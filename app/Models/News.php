@@ -58,5 +58,16 @@ class News extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function rules()
+    {
+        return  [
+            "title" => "required|string|min:10|max:50|unique:news",
+            "description" => "required|max:1024",
+            "category_id" => "required|exists:categories,id|integer",
+            "active" => "boolean",
+            "publish_date" => "date",
+        ];
+    }
 }
 

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminNewsSaveRequest;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class NewsController extends Controller
 {
@@ -27,16 +29,21 @@ class NewsController extends Controller
         );
     }
 
-    public function update(News $news)
+    public function update($id)
     {
         return view("admin.news.create", [
-                'model' => $news,
+                'model' => News::find($id),
                 'categories' => $this->getCategoriesList()
             ]
         );
     }
 
-    public function save(Request $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function save(AdminNewsSaveRequest $request)
     {
         $id = $request->post('id');
         /** @var News $model */
