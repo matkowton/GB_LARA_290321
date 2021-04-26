@@ -51,7 +51,6 @@ class News extends Model
     public function getByCategoryId(int $categoryId) {
         return static::query()
             ->with(['category'])
-           // ->where('category_id', $categoryId)
             ->get();
     }
 

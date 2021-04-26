@@ -25,7 +25,7 @@ Route::group([
         ->name('card');
 
     Route::get('/{categoryId}', [NewsController::class, 'list'])
-        ->where('id', '[0-9]+')
+        ->where('categoryId', '[0-9]+')
         ->name('list');
 });
 
@@ -43,10 +43,11 @@ Route::group([
         ->name('create');
     Route::post( '/save',[AdminNewsController::class, 'save'])
         ->name('save');
-
-    Route::get('/update',[AdminNewsController::class, 'update'])
+    Route::get('/update/{news}', [AdminNewsController::class, 'update'])
+        ->where('news', '[0-9]+')
         ->name('update');
-    Route::get('/delete',[AdminNewsController::class, 'delete'])
+    Route::get('/delete/{id}',[AdminNewsController::class, 'delete'])
+        ->where('id', '[0-9]+')
         ->name('delete');
 });
 
