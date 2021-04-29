@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
-
+use App\Http\Controllers\LocaleController;
+use \App\Http\Controllers\Admin\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,6 +37,7 @@ Route::get('/db', [\App\Http\Controllers\DbController::class, 'index']);
 Route::group([
     'prefix' => '/admin/news',
     'as' => 'admin::news::',
+    'middleware' => ['auth']
 ], function () {
     Route::get('/', [AdminNewsController::class, 'index'] )
         ->name('index');
@@ -51,3 +53,16 @@ Route::group([
         ->name('delete');
 });
 
+Route::match(['get', 'post'], '/admin/profile', [ProfileController::class, 'update'])
+    ->name('admin:profile')
+    ->middleware('auth');
+
+Route::get('/locale/{lang}', [LocaleController::class, 'index'])
+    ->where('lang','\w+')
+    ->name('locale');
+
+
+Auth::routes(['register' => false]);
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
