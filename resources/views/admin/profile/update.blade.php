@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <h1>Профиль пользователя</h1>
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -17,7 +17,7 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{route('admin:profile')}}" method="post">
+            <form action="{{route('admin::profile::update')}}" method="post">
                 @csrf
                 <div class="form-group">
                     <label>Имя</label>
@@ -37,6 +37,7 @@
                     <label>Текущий пароль</label>
                     <input class="form-control" type="password" name="current_password">
                 </div>
+
                 <div class="form-group">
                     <input class="btn btn-success" type="submit" value="Save">
                 </div>

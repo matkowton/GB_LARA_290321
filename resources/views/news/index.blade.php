@@ -1,10 +1,17 @@
-@foreach($categories as $id => $name)
-    @php
-        $url = route('news::list', ['categoryId' => $id])
-    @endphp
+@extends('layouts.main')
 
-<div>
-    <a href="{{$url}}">{{$name}}</a>
-</div>
+@section('title')
+    Категории
+@endsection
 
-@endforeach
+@section('content')
+    @foreach($categories as $category)
+        @php
+            $url = route('news::list', ['categoryId' => $category->id])
+        @endphp
+
+        <div>
+            <a href='{{$url}}'>{{$category->name}}</a>
+        </div>
+    @endforeach
+@endsection

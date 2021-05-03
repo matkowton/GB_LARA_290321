@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\ParserController;
+use App\Http\Controllers\SocialController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
@@ -33,29 +35,67 @@ Route::group([
 Route::get('/db', [\App\Http\Controllers\DbController::class, 'index']);
 
 
-/** Админка новостей */
+/**
+ * Админка новостей
+ */
+$adminNewsRoutes = function () {
+    Route::group([
+        'prefix' => '/news',
+        'as' => 'news::',
+    ], function () {
+        Route::get('/', 'NewsController@index')
+            ->name('index');
+
+        Route::match(['get'], '/create', 'NewsController@create')
+            ->name('create');
+
+        Route::match(['post'], '/save', 'NewsController@save')
+            ->name('save');
+
+        Route::get('/update/{id}', 'NewsController@update')
+            ->name('update');
+
+        Route::get('/delete/{id}', 'NewsController@delete')
+            ->name('delete');
+    });
+};
+
+/**
+ * Админка
+ */
 Route::group([
-    'prefix' => '/admin/news',
-    'as' => 'admin::news::',
-    'middleware' => ['auth']
-], function () {
-    Route::get('/', [AdminNewsController::class, 'index'] )
-        ->name('index');
-    Route::get( '/create',[AdminNewsController::class, 'create'])
-        ->name('create');
-    Route::post( '/save',[AdminNewsController::class, 'save'])
-        ->name('save');
-    Route::get('/update/{id}', [AdminNewsController::class, 'update'])
-        ->where('id', '[0-9]+')
-        ->name('update');
-    Route::get('/delete/{id}',[AdminNewsController::class, 'delete'])
-        ->where('id', '[0-9]+')
-        ->name('delete');
+    'prefix' => 'admin/',
+    'namespace' => '\App\Http\Controllers\Admin',
+    'as' => 'admin::',
+    'middleware' => ['auth', 'check_admin']
+], function () use ($adminNewsRoutes) {
+    $adminNewsRoutes();
+    //Профиль
+    Route::group([
+        'prefix' => 'profile',
+        'as' => 'profile::',
+    ], function () {
+        Route::post('update', 'ProfileController@update',
+        )->name('update');
+
+        Route::get('show', 'ProfileController@show',
+        )->name('show');
+    });
+
+    //Parser
+    Route::get("parser", [ParserController::class, 'index'])
+        ->name('parser');
 });
 
-Route::match(['get', 'post'], '/admin/profile', [ProfileController::class, 'update'])
-    ->name('admin:profile')
-    ->middleware('auth');
+Route::group([
+    'prefix' => 'social',
+    'as' => 'social::',
+], function () {
+    Route::get('/login', [SocialController::class, 'loginVk'])
+        ->name('login-vk');
+    Route::get('/response', [SocialController::class, 'responseVk'])
+        ->name('response-vk');
+});
 
 Route::get('/locale/{lang}', [LocaleController::class, 'index'])
     ->where('lang','\w+')

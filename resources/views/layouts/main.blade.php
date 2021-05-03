@@ -10,17 +10,14 @@
     <title>@section('title') Страница @show</title>
 </head>
 <body>
+<div class="header">
+    @include('blocks.menu')
+</div>
 <div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="header">
-            @include('blocks.menu')
-        </div>
-        <div class="content">
-            @yield('content')
-        </div>
-        <div class="footer">
-            This is footer
-        </div>
+    <div class="content">
+        @yield('content')
+    </div>
+    <div class="footer">
     </div>
 </div>
 </body>

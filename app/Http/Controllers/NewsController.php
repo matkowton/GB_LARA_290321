@@ -12,7 +12,7 @@ class NewsController extends Controller
     public function index()
     {
         //$result = News::all();
-        return view('news.index', ['categories' => $this->categories]);
+        return view('news.index', ['categories' => Category::all()]);
     }
 
     public function list(News $news, $categoryId)
@@ -22,7 +22,12 @@ class NewsController extends Controller
 
     public function card(News $news)
     {
-        //return view('news.card', ['model' => $news]);
+        return view(
+            'news.card',
+            [
+                'news' => $news,
+            ]
+        );
     }
 
 }
