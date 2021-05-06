@@ -13,6 +13,8 @@ class NewsController extends Controller
 {
     public function index()
     {
+        $user = \Auth::user();
+
         $news = News::query()
             ->orderBy('updated_at', 'desc')
             ->paginate(10);

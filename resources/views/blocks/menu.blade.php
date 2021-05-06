@@ -32,6 +32,7 @@
                             </a>
                         </div>
                     </li>
+
                     @foreach($menu as $item)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route($item['alias'])}}">

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Abilities;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,8 +37,9 @@ class AppServiceProvider extends ServiceProvider
             [
                 'title' => __('menu.admin'),
                 'alias' => 'admin::news::index'
-            ],
+            ]
         ];
+
 
         View::share('menu', $menu);
     }
